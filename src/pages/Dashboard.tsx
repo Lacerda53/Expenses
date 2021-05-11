@@ -7,8 +7,6 @@ import {
   StyleSheet,
   Platform,
   Dimensions,
-  Modal,
-  Alert,
 } from "react-native";
 import { useSelector } from "react-redux";
 import { Button } from "../components/Button";
@@ -26,14 +24,17 @@ export function Dashboard() {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Olá,</Text>
-        <Text style={styles.subtitle}>guilhermeandrade2013@gmail.com</Text>
-        <CardExpenses value={10000} />
+        <Text style={styles.subtitle}>{user.email}</Text>
+        <CardExpenses value={1111111} />
       </View>
       <View style={styles.body}>
         <Text style={styles.textBody}>Histórico</Text>
       </View>
       <View style={styles.footer}>
-        <Button title="Adicionar despesa" onPress={() => navigation.navigate('CreateExpense')} />
+        <Button
+          title="Adicionar despesa"
+          onPress={() => navigation.navigate("CreateExpense")}
+        />
       </View>
     </SafeAreaView>
   );
@@ -61,12 +62,12 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    padding: 15
+    padding: 15,
   },
   textBody: {
     fontSize: 16,
     borderBottomWidth: 1,
-    borderBottomColor: colors.gray
+    borderBottomColor: colors.gray,
   },
   mainCard: {
     top: 15,
@@ -74,10 +75,10 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width / 1.2,
   },
   footer: {
-    position: 'absolute',
-    width: '100%',
+    position: "absolute",
+    width: "100%",
     bottom: 0,
     padding: 15,
-    marginBottom: 15
-  }
+    marginBottom: 15,
+  },
 });
