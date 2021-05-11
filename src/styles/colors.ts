@@ -1,14 +1,11 @@
 export default {
     green: '#13b15f',
-
+    title: '#333',
     heading: '#52665A',
-    body_dark: '#738078',
-    body_light: '#AAB2AD',
-
     background: '#FFF',
-    shape: '#f0f0f0',
+    shape: '#EEEEEE',
     white: "#FFF",
     gray: '#CFCFCF',
-
+    base: '#757575',
     red: '#e83f5b'
 };

@@ -1,53 +1,61 @@
-import React from 'react'
-import { SafeAreaView, View, Text, StyleSheet, Platform } from 'react-native'
-import { useSelector } from 'react-redux'
-import { RootState } from '../store'
-import colors from '../styles/colors'
-import { LinearGradient } from 'expo-linear-gradient';
-import fonts from '../styles/fonts'
+import React from "react";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  Dimensions,
+} from "react-native";
+import { useSelector } from "react-redux";
+import { CardExpenses } from "../components/CardExpenses";
+import { RootState } from "../store";
+import colors from "../styles/colors";
+import fonts from "../styles/fonts";
 
 export function Dashboard() {
-    const user = useSelector((state: RootState) => state.auth.user)
+  const user = useSelector((state: RootState) => state.auth.user);
 
-    return (
-        <SafeAreaView style={styles.container}>
-            <LinearGradient start={{ x: 1, y: 1 }} colors={['#4FD074', '#359951']} style={styles.header}>
-                <Text style={styles.title}>Bem Vindo(a)</Text>
-            </LinearGradient>
-            <View>
-                <View>
-                    <Text>Despesas</Text>
-                    <Text>R$</Text>
-                </View>
-            </View>
-        </SafeAreaView>
-    )
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Olá,</Text>
+        <Text style={styles.subtitle}>guilhermeandrade2013@gmail.com</Text>
+        <CardExpenses value={10000} />
+      </View>
+      <View style={styles.body}></View>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: '100%',
-    },
-    header: {
-        backgroundColor: colors.green,
-        paddingTop: Platform.OS === 'android' ? 30 : 0,
-        height: 150,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 5,
-        },
-        shadowOpacity: 0.36,
-        shadowRadius: 6.68,
-
-        elevation: 11,
-    },
-    title: {
-        padding: 20,
-        fontSize: 25,
-        color: colors.white,
-        fontFamily: fonts.heading,
-        fontWeight: 'bold',
-    }
-})
+  container: {
+    flex: 1,
+    width: "100%",
+  },
+  header: {
+    paddingTop: Platform.OS === "android" ? 60 : 40,
+    padding: 15,
+  },
+  title: {
+    fontSize: 32,
+    color: colors.title,
+    fontFamily: fonts.heading,
+    fontWeight: "bold",
+  },
+  subtitle: {
+    color: colors.base,
+    fontSize: 17,
+    marginTop: 5,
+  },
+  body: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  mainCard: {
+    top: 15,
+    backgroundColor: colors.white,
+    width: Dimensions.get("window").width / 1.2,
+  },
+});
