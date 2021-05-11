@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import {
   SafeAreaView,
@@ -6,15 +7,20 @@ import {
   StyleSheet,
   Platform,
   Dimensions,
+  Modal,
+  Alert,
 } from "react-native";
 import { useSelector } from "react-redux";
+import { Button } from "../components/Button";
 import { CardExpenses } from "../components/CardExpenses";
+import { ItemExpenses } from "../components/ItemExpenses";
 import { RootState } from "../store";
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
 
 export function Dashboard() {
   const user = useSelector((state: RootState) => state.auth.user);
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -23,7 +29,12 @@ export function Dashboard() {
         <Text style={styles.subtitle}>guilhermeandrade2013@gmail.com</Text>
         <CardExpenses value={10000} />
       </View>
-      <View style={styles.body}></View>
+      <View style={styles.body}>
+        <Text style={styles.textBody}>Histórico</Text>
+      </View>
+      <View style={styles.footer}>
+        <Button title="Adicionar despesa" onPress={() => navigation.navigate('CreateExpense')} />
+      </View>
     </SafeAreaView>
   );
 }
@@ -50,12 +61,23 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 15
+  },
+  textBody: {
+    fontSize: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.gray
   },
   mainCard: {
     top: 15,
     backgroundColor: colors.white,
     width: Dimensions.get("window").width / 1.2,
   },
+  footer: {
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
+    padding: 15,
+    marginBottom: 15
+  }
 });
