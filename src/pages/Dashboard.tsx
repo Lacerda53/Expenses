@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -7,28 +7,91 @@ import {
   StyleSheet,
   Platform,
   Dimensions,
+  Alert,
 } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 import { Button } from "../components/Button";
 import { CardExpenses } from "../components/CardExpenses";
 import { ItemExpenses } from "../components/ItemExpenses";
+import api from "../services/api";
 import { RootState } from "../store";
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
 
+interface IExpense {
+  _id: string;
+  date: string;
+  value: number;
+  item: string;
+}
+
 export function Dashboard() {
   const user = useSelector((state: RootState) => state.auth.user);
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [perPage] = useState<number>(10);
+  const [listExpenses, setListExpenses] = useState<IExpense[]>([])
+
+  async function loadExpenses() {
+    setIsLoading(true);
+    await api.get("expenses", {
+      params: { page, perPage },
+      headers: { Authorization: `Bearer ${user.token}` }
+    }).then(result => {
+      setListExpenses([...listExpenses, ...result.data])
+      setPage(page + 1);
+      setIsLoading(false);
+    }).catch(() => {
+      Alert.alert("Ops", "Ocorreu um erro na listagem")
+    });
+  }
+
+  const expensesTotal = listExpenses.reduce((acc, expense) => {
+    acc.total += expense.value
+    return acc;
+  }, {
+    total: 0
+  })
+
+  async function handleDelete(id: string) {
+    setIsLoading(true);
+    api.delete(`expenses/${id}`, {
+      headers: { Authorization: `Bearer ${user.token}` }
+    }).then(result => {
+      if (result.status === 200) {
+        setListExpenses([]);
+        loadExpenses()
+      }
+    }).catch(error => {
+      Alert.alert(error)
+    })
+  }
+
+  useEffect(() => {
+    loadExpenses()
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Olá,</Text>
         <Text style={styles.subtitle}>{user.email}</Text>
-        <CardExpenses value={1111111} />
+        <CardExpenses value={expensesTotal.total} />
       </View>
       <View style={styles.body}>
         <Text style={styles.textBody}>Histórico</Text>
+        <FlatList
+          keyExtractor={(_, index) => index.toString()}
+          data={listExpenses}
+          showsVerticalScrollIndicator={false}
+          onEndReached={loadExpenses}
+          onEndReachedThreshold={0.1}
+          renderItem={({ item }) => (
+            <ItemExpenses handleRemove={handleDelete} key={item} data={item} />
+          )}
+        />
       </View>
       <View style={styles.footer}>
         <Button
@@ -63,6 +126,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     padding: 15,
+    marginBottom: 80
   },
   textBody: {
     fontSize: 16,

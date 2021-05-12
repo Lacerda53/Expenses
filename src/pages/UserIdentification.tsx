@@ -7,7 +7,6 @@ import colors from '../styles/colors'
 import fonts from '../styles/fonts'
 import { setUser } from '../store/Auth.store'
 import { useDispatch } from 'react-redux'
-import { color } from 'react-native-reanimated'
 
 interface ITokenResult {
     id: string;
@@ -71,7 +70,7 @@ export function UserIdentification() {
                         </View>
                         <View style={styles.footer}>
                             {isLoading ?
-                                <ActivityIndicator color={colors.green} /> :
+                                 <ActivityIndicator color={colors.green} size='large' /> :
                                 <Button title="Confirmar" disabled={isLoading} onPress={handleSubmit} />}
                         </View>
                     </View>

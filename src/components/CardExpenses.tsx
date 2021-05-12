@@ -3,22 +3,21 @@ import { View, Text, StyleSheet } from "react-native";
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
 import { Feather } from "@expo/vector-icons";
+import { numberToReal } from "../utils/formatNumber";
 
 interface ICardExpenses {
-  value: number;
+  value: any;
 }
 export function CardExpenses({ value }: ICardExpenses) {
   const [visible, setVisible] = useState(true);
 
-  function currencyFormat(num: number) {
-    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "1,");
-  }
+
   return (
     <View style={styles.card}>
       <View>
         <Text style={styles.cardTitle}>Despesas</Text>
         <Text style={styles.cardContent}>
-          R$ {visible && currencyFormat(value)}
+          {visible && numberToReal(value)}
         </Text>
       </View>
       <Feather
