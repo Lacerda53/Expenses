@@ -7,7 +7,7 @@ const auth = createSlice({
       id: "",
       email: "",
       token: "",
-    },
+    }
   },
   reducers: {
     setUser(state, action) {
