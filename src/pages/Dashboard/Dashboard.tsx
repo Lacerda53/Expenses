@@ -49,11 +49,11 @@ export function Dashboard() {
 
   const expensesTotal = listExpenses.reduce(
     (acc, expense) => {
-      // if (expense.additionalInfo.type) {
-      //   acc.total += expense.value;
-      // } else {
-      //   acc.total -= expense.value;
-      // }
+      if (expense.additionalInfo?.type) {
+        acc.total += expense.value;
+      } else {
+        acc.total -= expense.value;
+      }
       return acc;
     },
     {

@@ -48,11 +48,11 @@ export function ItemExpenses({ data, handleRemove }: IPros) {
           style={[
             styles.textMoney,
             {
-              color: data.additionalInfo.type ? colors.green : colors.red,
+              color: data.additionalInfo?.type ? colors.green : colors.red,
             },
           ]}
         >
-          {!data.additionalInfo.type && "- "}
+          {!data.additionalInfo?.type && "- "}
           {numberToReal(data.value)}
         </Text>
       </TouchableOpacity>

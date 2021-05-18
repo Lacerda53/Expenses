@@ -15,7 +15,7 @@ export function CardExpenses({ value }: ICardExpenses) {
   return (
     <View style={styles.card}>
       <View>
-        <Text style={styles.cardTitle}>Despesas</Text>
+        <Text style={styles.cardTitle}>Saldo Total</Text>
         <Text style={styles.cardContent}>
           {visible && numberToReal(value)}
         </Text>

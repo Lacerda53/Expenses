@@ -36,8 +36,8 @@ export function CreateExpense() {
 
   const titles = [
     "Como podemos categorizar?",
-    "Qual é o valor?",
-    "Qual o título?",
+    `Qual é o valor de ${typeExpense? 'entrada': 'saída'}?`,
+    `Qual o título da sua ${typeExpense? 'entrada': 'saída'}?`,
     "Quando ocorreu?",
   ];
 
@@ -65,7 +65,7 @@ export function CreateExpense() {
       </TouchableOpacity>
     </View>,
     <TextInputMask
-      placeholder="Qual o valor do gasto?"
+      placeholder="Qual o valor?"
       style={styles.input}
       type={"money"}
       value={moneyString}
@@ -79,7 +79,7 @@ export function CreateExpense() {
       value={item}
       style={styles.input}
       onChangeText={(text) => setitem(text)}
-      placeholder="O que foi seu gasto?"
+      placeholder="O que é esse valor?"
     />,
     <TextInputMask
       placeholder="Ex: Dia-Mês-Ano"

@@ -61,6 +61,7 @@ export function DetailsExpense() {
         <View>
           <Text style={styles.title}>{data.item}</Text>
           <Text style={styles.money}>{numberToReal(data.value)}</Text>
+          <Text style={styles.money}>{data.additionalInfo?.type?'Entrada': 'Saída'}</Text>
           <Text style={styles.date}>
             {newdate.split("-").reverse().join("/")}
           </Text>

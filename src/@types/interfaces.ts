@@ -3,7 +3,7 @@ export interface IExpense {
     date: string;
     value: number;
     item: string;
-    additionalInfo: {
+    additionalInfo?: {
       type: boolean;
     };
   }
