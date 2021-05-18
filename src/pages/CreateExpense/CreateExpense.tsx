@@ -3,12 +3,9 @@ import {
   SafeAreaView,
   View,
   Text,
-  StyleSheet,
   Alert,
-  StatusBar,
   TextInput,
   ActivityIndicator,
-  Dimensions,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import colors from "../../styles/colors";
@@ -18,8 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useNavigation } from "@react-navigation/core";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import fonts from "../../styles/fonts";
 import { setIsRender } from "../../store/Render.store";
+import { styles } from "./styles";
 
 export function CreateExpense() {
   const [typeExpense, setTypeExpense] = useState<boolean>(true);
@@ -36,8 +33,8 @@ export function CreateExpense() {
 
   const titles = [
     "Como podemos categorizar?",
-    `Qual é o valor de ${typeExpense? 'entrada': 'saída'}?`,
-    `Qual o título da sua ${typeExpense? 'entrada': 'saída'}?`,
+    `Qual é o valor de ${typeExpense ? 'entrada' : 'saída'}?`,
+    `Qual o título da sua ${typeExpense ? 'entrada' : 'saída'}?`,
     "Quando ocorreu?",
   ];
 
@@ -172,77 +169,3 @@ export function CreateExpense() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: "95%",
-    marginTop: StatusBar.currentHeight,
-  },
-  header: {
-    padding: 20,
-  },
-  title: {
-    marginTop: 10,
-    fontSize: 30,
-    textAlign: "left",
-    color: colors.heading,
-    fontFamily: fonts.heading,
-    lineHeight: 32,
-  },
-  input: {
-    borderBottomWidth: 1,
-    borderColor: colors.gray,
-    color: colors.green,
-    fontFamily: fonts.heading,
-    width: "100%",
-    fontSize: 22,
-    marginTop: 20,
-    padding: 10,
-    textAlign: "left",
-  },
-  body: {
-    padding: 20,
-    width: "100%",
-  },
-  footer: {
-    paddingHorizontal: 15,
-    position: "absolute",
-    bottom: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    marginBottom: 15,
-  },
-  button: {
-    backgroundColor: colors.green,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 16,
-    marginBottom: 10,
-    height: 56,
-    width: 56,
-  },
-  icon: {
-    fontSize: 25,
-    color: colors.white,
-  },
-  rowButtons: {
-    marginTop: 30,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  select: {
-    width: Dimensions.get("window").width / 2.3,
-    height: Dimensions.get("window").width / 6.5,
-    borderWidth: 2,
-    borderRadius: 5,
-    padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: colors.gray,
-  },
-  textSelect: {
-    color: colors.base,
-    fontSize: 16,
-  },
-});

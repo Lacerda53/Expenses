@@ -4,9 +4,6 @@ import {
   SafeAreaView,
   View,
   Text,
-  StyleSheet,
-  Platform,
-  Dimensions,
   Alert,
   RefreshControl,
 } from "react-native";
@@ -18,8 +15,7 @@ import { CardExpenses } from "../../components/CardExpenses";
 import { ItemExpenses } from "../../components/ItemExpenses";
 import api from "../../services/api";
 import { RootState } from "../../store";
-import colors from "../../styles/colors";
-import fonts from "../../styles/fonts";
+import { styles } from "./styles";
 
 export function Dashboard() {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -115,47 +111,3 @@ export function Dashboard() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "100%",
-  },
-  header: {
-    paddingTop: Platform.OS === "android" ? 60 : 40,
-    padding: 15,
-  },
-  title: {
-    fontSize: 32,
-    color: colors.title,
-    fontFamily: fonts.heading,
-    fontWeight: "bold",
-  },
-  subtitle: {
-    color: colors.base,
-    fontSize: 17,
-    marginTop: 5,
-  },
-  body: {
-    flex: 1,
-    padding: 15,
-    marginBottom: 80,
-  },
-  textBody: {
-    fontSize: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.gray,
-  },
-  mainCard: {
-    top: 15,
-    backgroundColor: colors.white,
-    width: Dimensions.get("window").width / 1.2,
-  },
-  footer: {
-    position: "absolute",
-    width: "100%",
-    bottom: 0,
-    padding: 15,
-    marginBottom: 15,
-  },
-});

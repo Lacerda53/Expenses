@@ -2,7 +2,6 @@ import { useNavigation } from "@react-navigation/core";
 import React, { useState } from "react";
 import {
   SafeAreaView,
-  StyleSheet,
   View,
   Text,
   TextInput,
@@ -14,9 +13,9 @@ import {
 import { Button } from "../../components/Button";
 import api from "../../services/api";
 import colors from "../../styles/colors";
-import fonts from "../../styles/fonts";
 import { setUser } from "../../store/Auth.store";
 import { useDispatch } from "react-redux";
+import { styles } from "./styles";
 
 interface ITokenResult {
   id: string;
@@ -104,42 +103,4 @@ export function UserIdentification() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "space-around",
-  },
-  content: {
-    flex: 1,
-    width: "100%",
-  },
-  form: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 54,
-    alignContent: "center",
-  },
-  title: {
-    fontSize: 24,
-    textAlign: "center",
-    color: colors.heading,
-    fontFamily: fonts.heading,
-    lineHeight: 32,
-  },
-  input: {
-    borderBottomWidth: 1,
-    borderColor: colors.gray,
-    color: colors.heading,
-    width: "100%",
-    fontSize: 18,
-    marginTop: 50,
-    padding: 10,
-    textAlign: "center",
-  },
-  footer: {
-    width: "100%",
-    marginTop: 40,
-  },
-});
+
