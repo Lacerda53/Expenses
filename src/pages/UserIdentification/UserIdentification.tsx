@@ -74,6 +74,7 @@ export function UserIdentification() {
               </Text>
               <TextInput
                 onBlur={handleInputBlur}
+                onSubmitEditing={handleSubmit}
                 value={email}
                 onChangeText={(text) => setEmail(text)}
                 onFocus={handleInputFocus}
