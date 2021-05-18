@@ -5,6 +5,8 @@ import { Welcome } from '../pages/Welcome';
 import { UserIdentification } from '../pages/UserIdentification';
 import { Dashboard } from '../pages/Dashboard';
 import { CreateExpense } from '../pages/CreateExpense';
+import { DetailsExpense } from '../pages/DetailsExpense';
+import { EditExpense } from '../pages/EditExpenses';
 
 
 const stackRoutes = createStackNavigator()
@@ -33,11 +35,15 @@ const AppRoutes: React.FC = () => (
         />
         <stackRoutes.Screen
             name="CreateExpense"
-            options={{
-                title:'Nova Despesa',
-                headerShown: true
-            }}
             component={CreateExpense}
+        />
+        <stackRoutes.Screen
+            name="DetailsExpense"
+            component={DetailsExpense}
+        />
+        <stackRoutes.Screen
+            name="EditExpense"
+            component={EditExpense}
         />
     </stackRoutes.Navigator>
 )

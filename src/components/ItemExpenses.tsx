@@ -6,6 +6,7 @@ import colors from '../styles/colors'
 import fonts from '../styles/fonts'
 import { numberToReal } from '../utils/formatNumber'
 import { Feather } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/core'
 
 interface IPros {
     data: IExpense;
@@ -21,8 +22,8 @@ interface IExpense {
 
 
 export function ItemExpenses({ data, handleRemove }: IPros) {
-
-    const newdate = data.date.split('T')[0]
+    const newdate = data.date.split('T')[0];
+    const navigation = useNavigation();
 
     return (
         <Swipeable
@@ -37,13 +38,13 @@ export function ItemExpenses({ data, handleRemove }: IPros) {
                 </Animated.View>
             )}
         >
-            <View style={styles.container}>
+            <TouchableOpacity onPress={()=>navigation.navigate('DetailsExpense', {data})} style={styles.container}>
                 <View>
                     <Text style={styles.title}>{data.item}</Text>
-                    <Text style={styles.subtitle}>{newdate.split("-").join("/")}</Text>
+                    <Text style={styles.subtitle}>{newdate.split("-").reverse().join('/')}</Text>
                 </View>
                 <Text style={styles.textMoney}>{numberToReal(data.value)}</Text>
-            </View>
+            </TouchableOpacity>
         </Swipeable>
     )
 }

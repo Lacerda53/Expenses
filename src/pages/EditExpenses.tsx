@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Alert, StatusBar, TextInput, ActivityIndicator } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import colors from "../styles/colors";
@@ -9,16 +9,19 @@ import { RootState } from "../store";
 import { useNavigation } from "@react-navigation/core";
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 import fonts from "../styles/fonts";
+import { useRoute } from "@react-navigation/native";
 
-export function CreateExpense() {
+export function EditExpense() {
+    const { params } = useRoute<any>();
     const [typeExpense, setTypeExpense] = useState<boolean>(false);
-    const [date, setDate] = useState<string>('');
-    const [money, setMoney] = useState<number>(0);
-    const [moneyString, setMoneyString] = useState<string>('0');
-    const [item, setitem] = useState<string>('');
+    const [date, setDate] = useState<string>(params.data.date);
+    const [money, setMoney] = useState<number>(params.data.value);
+    const [moneyString, setMoneyString] = useState<string>(params.data.value);
+    const [item, setitem] = useState<string>(params.data.item);
     const [isLoading, setIsloading] = useState<boolean>(false);
     const [currentPage, setcurrentPage] = useState<number>(0)
     const navigation = useNavigation();
+
     const user = useSelector((state: RootState) => state.auth.user);
 
     const titles = [
@@ -59,12 +62,12 @@ export function CreateExpense() {
         />
     ]
 
-    async function createExpense() {
+    async function EditExpense() {
         if (item != '' && money != 0 && date != '') {
             setIsloading(true);
             const value = money;
             const newDate = date.split('/').reverse().join('-');
-            await api.post(`expenses`, { date: newDate, item, value }, {
+            await api.put(`expenses`, { date: newDate, item, value }, {
                 headers: { Authorization: `Bearer ${user.token}` }
             }).then(result => {
                 if (result.status === 201) {
@@ -97,7 +100,7 @@ export function CreateExpense() {
             setcurrentPage(page => page + 1);
         }
         else {
-            createExpense()
+            EditExpense()
         }
     }
 
@@ -107,6 +110,9 @@ export function CreateExpense() {
                 <TouchableOpacity onPress={handleBack}>
                     <MaterialCommunityIcons name={currentPage == 0 ? 'close' : 'arrow-left'} size={30} color={colors.base} />
                 </TouchableOpacity>
+                <View style={styles.editContainer}>
+                    <Text style={styles.editText}>Edição</Text>
+                </View>
             </View>
             <View style={styles.body}>
                 <Text style={styles.title}>{titles[currentPage]}</Text>
@@ -127,6 +133,9 @@ const styles = StyleSheet.create({
         marginTop: StatusBar.currentHeight
     },
     header: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
         padding: 20
     },
     title: {
@@ -173,5 +182,14 @@ const styles = StyleSheet.create({
     icon: {
         fontSize: 25,
         color: colors.white
+    },
+    editContainer:{
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 4,
+        borderColor: colors.green
+    },
+    editText:{
+        color: colors.green
     }
 });

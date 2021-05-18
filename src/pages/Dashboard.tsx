@@ -8,6 +8,7 @@ import {
   Platform,
   Dimensions,
   Alert,
+  RefreshControl,
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
@@ -29,6 +30,7 @@ interface IExpense {
 export function Dashboard() {
   const user = useSelector((state: RootState) => state.auth.user);
   const navigation = useNavigation();
+  const [isRender, setIsRender] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [perPage] = useState<number>(10);
@@ -40,9 +42,9 @@ export function Dashboard() {
       params: { page, perPage },
       headers: { Authorization: `Bearer ${user.token}` }
     }).then(result => {
-      setListExpenses([...listExpenses, ...result.data])
-      setPage(page + 1);
+      setListExpenses([...result.data])
       setIsLoading(false);
+      setIsRender(!isRender);
     }).catch(() => {
       Alert.alert("Ops", "Ocorreu um erro na listagem")
     });
@@ -61,11 +63,10 @@ export function Dashboard() {
       headers: { Authorization: `Bearer ${user.token}` }
     }).then(result => {
       if (result.status === 200) {
-        setListExpenses([]);
         loadExpenses()
       }
     }).catch(error => {
-      Alert.alert(error)
+      Alert.alert(error.message)
     })
   }
 
@@ -83,8 +84,16 @@ export function Dashboard() {
       <View style={styles.body}>
         <Text style={styles.textBody}>Histórico</Text>
         <FlatList
-          keyExtractor={(_, index) => index.toString()}
+          key={listExpenses.length}
+          keyExtractor={(item) => item._id}
+          refreshControl={
+            <RefreshControl
+              refreshing={isLoading}
+              onRefresh={loadExpenses}
+            />
+          }
           data={listExpenses}
+          extraData={isRender}
           showsVerticalScrollIndicator={false}
           onEndReached={loadExpenses}
           onEndReachedThreshold={0.1}
